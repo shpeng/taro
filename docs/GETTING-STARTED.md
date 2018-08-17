@@ -37,6 +37,16 @@ $ taro build --type weapp --watch
 # npx用户也可以使用
 $ npx taro build --type weapp --watch
 ```
+支付宝小程序编译预览模式
+
+```bash
+# npm script
+$ npm run dev:aliapp
+# 仅限全局安装
+$ taro build --type aliapp --watch
+# npx用户也可以使用
+$ npx taro build --type aliapp --watch
+```
 
 H5编译预览模式
 ```bash

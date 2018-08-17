@@ -52,6 +52,21 @@ const config = {
       }
     }
   },
+  // 小程序端专用配置
+  aliapp: {
+    module: {
+      postcss: {
+        autoprefixer: {
+          enable: true
+        },
+        // 小程序端样式引用本地资源内联配置
+        url: {
+          enable: true,
+          limit: 10240
+        }
+      }
+    }
+  },
   // H5 端专用配置
   h5: {
     publicPath: '/',

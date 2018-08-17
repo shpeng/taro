@@ -15,7 +15,8 @@
   },
   "keywords": [
     "taro",
-    "weapp"
+    "weapp",
+    "aliapp"
   ],
   "engines": {
     "node": ">=7.6.0"

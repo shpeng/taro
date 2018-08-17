@@ -50,6 +50,9 @@ const config = {
   weapp: {
 
   },
+  aliapp: {
+
+  },
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
