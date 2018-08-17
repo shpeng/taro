@@ -22,6 +22,9 @@ function build (args, buildConfig) {
     case Util.BUILD_TYPES.WEAPP:
       buildForWeapp({ watch })
       break
+    case Util.BUILD_TYPES.ALIAPP:
+      buildForAliapp({ watch })
+      break
     case Util.BUILD_TYPES.RN:
       buildForRN({ watch })
       break
@@ -35,6 +38,10 @@ function build (args, buildConfig) {
 
 function buildForWeapp ({ watch }) {
   require('./weapp').build({ watch })
+}
+
+function buildForAliapp ({ watch }) {
+  require('./aliapp').build({ watch })
 }
 
 function buildForH5 (buildConfig) {
