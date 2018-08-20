@@ -1,6 +1,7 @@
 {
-  "name": "taro",
-  "private": true,
+  "name": "taro-s4s",
+  "version": "1.0.0-beta.1",
+  "private": false,
   "description": "Nerv-multi多端开发解决方案",
   "main": "index.js",
   "scripts": {

@@ -20,7 +20,6 @@
     "@tarojs/taro": "^<%= version %>",
     "@tarojs/taro-h5": "^<%= version %>",
     "@tarojs/taro-weapp": "^<%= version %>",
-    "@tarojs/taro-aliapp": "^<%= version %>",
     "nervjs": "^1.3.0"
   },
   "devDependencies": {

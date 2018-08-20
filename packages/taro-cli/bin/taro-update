@@ -33,7 +33,6 @@ const UPDATE_PACKAGE_LIST = [
   '@tarojs/rn-runner',
   '@tarojs/router',
   '@tarojs/taro-weapp',
-  '@tarojs/taro-aliapp',
   '@tarojs/webpack-runner',
   'postcss-plugin-constparse',
   'eslint-config-taro',

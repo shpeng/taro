@@ -46,7 +46,7 @@ const appOutput = typeof weappConf.appOutput === 'boolean' ? weappConf.appOutput
 
 const notExistNpmList = []
 const taroJsFramework = '@tarojs/taro'
-const taroWeappFramework = '@tarojs/taro-aliapp'
+const taroWeappFramework = 'tarojs-aliapp-s4s'
 const taroJsComponents = '@tarojs/components'
 const taroJsRedux = '@tarojs/redux'
 let appConfig = {}
