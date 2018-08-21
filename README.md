@@ -118,6 +118,17 @@ $ npm install -g @tarojs/cli
 $ yarn global add @tarojs/cli
 ```
 
+使用 shpeng/taro `tarojs-cli-s4s`
+```
+$ yarn add taro-s4s
+$ yarn add tarojs-cli-s4s --dev
+```
+
+使用支付宝小程序 `tarojs-aliapp-s4s`
+```
+$ yarn add tarojs-aliapp-s4s
+```
+
 使用命令创建模板项目
 
 ```bash
@@ -154,16 +165,27 @@ $ taro build --type h5 --watch
 $ npx taro build --type h5 --watch
 ```
 
+支付宝小程序编译预览模式
+
+```bash
+# npm script
+$ npm run dev:aliapp
+# 仅限全局安装
+$ taro build --type aliapp --watch
+# npx 用户也可以使用
+$ npx taro build --type aliapp --watch
+```
+
 ## 项目打包
 打包小程序代码
 
 ```bash
 # npm script
-$ npm run build:weapp
+$ npm run build:weapp/aliapp
 # 仅限全局安装
-$ taro build --type weapp
+$ taro build --type weapp/aliapp
 # npx 用户也可以使用
-$ npx taro build --type weapp
+$ npx taro build --type weapp/aliapp
 ```
 
 打包 H5 代码

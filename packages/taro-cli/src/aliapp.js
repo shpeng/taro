@@ -3,7 +3,7 @@ const os = require('os')
 const path = require('path')
 const chalk = require('chalk')
 const chokidar = require('chokidar')
-const wxTransformer = require('@tarojs/transformer-wx')
+const wxTransformer = require('tarojs-transformer-ali-s4s')
 const traverse = require('babel-traverse').default
 const t = require('babel-types')
 const generate = require('babel-generator').default
@@ -933,9 +933,9 @@ async function buildEntry () {
     // 处理res.configObj 中的tabBar配置
     const tabBar = res.configObj.tabBar
     if (tabBar && typeof tabBar === 'object' && !Util.isEmptyObject(tabBar)) {
-      const list = tabBar.list || []
+      const items = tabBar.list || []
       let tabBarIcons = []
-      list.forEach(item => {
+      items.forEach(item => {
         if (item.iconPath) {
           tabBarIcons.push(item.iconPath)
         }
