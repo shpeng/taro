@@ -333,3 +333,10 @@ exports.cssImports = function (content) {
   }
   return results
 }
+
+// beck add
+exports.renameProperty = function(obj, oldName, newName) {
+  Object.defineProperty(obj, newName,
+    Object.getOwnPropertyDescriptor(obj, oldName));
+  delete obj[oldName];
+}

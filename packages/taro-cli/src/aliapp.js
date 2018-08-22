@@ -910,6 +910,22 @@ async function buildEntry () {
       }
     }
     if (appOutput) {
+      // 处理res.configObj 中的tabBar配置 list 改为 key items
+      const tabBar = res.configObj.tabBar
+      if (tabBar && typeof tabBar === 'object' && !Util.isEmptyObject(tabBar)) {
+        // 支付宝小程序 tabBar items
+        // Object.defineProperty(tabBar, "items",
+        //   Object.getOwnPropertyDescriptor(tabBar, "list"));
+        // delete tabBar["list"];
+        Util.renameProperty(tabBar, "list", "items")
+
+        const list = tabBar.items || []
+        list.forEach(item => {
+          Util.renameProperty(item, "text", "name")
+          Util.renameProperty(item, "iconPath", "icon")
+          Util.renameProperty(item, "selectedIconPath", "activeIcon")
+        })
+      }
       fs.writeFileSync(path.join(outputDir, 'app.json'), JSON.stringify(res.configObj, null, 2))
       Util.printLog(Util.pocessTypeEnum.GENERATE, '入口配置', `${outputDirName}/app.json`)
       fs.writeFileSync(path.join(outputDir, 'app.js'), resCode)
@@ -933,14 +949,15 @@ async function buildEntry () {
     // 处理res.configObj 中的tabBar配置
     const tabBar = res.configObj.tabBar
     if (tabBar && typeof tabBar === 'object' && !Util.isEmptyObject(tabBar)) {
-      const items = tabBar.list || []
+      // 支付宝小程序 tabBar items
+      const list = tabBar.items || []
       let tabBarIcons = []
-      items.forEach(item => {
-        if (item.iconPath) {
-          tabBarIcons.push(item.iconPath)
+      list.forEach(item => {
+        if (item.icon) {
+          tabBarIcons.push(item.icon)
         }
-        if (item.selectedIconPath) {
-          tabBarIcons.push(item.selectedIconPath)
+        if (item.activeIcon) {
+          tabBarIcons.push(item.activeIcon)
         }
       })
       tabBarIcons = tabBarIcons.map(item => path.resolve(sourceDir, item))

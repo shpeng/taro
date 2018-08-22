@@ -10,7 +10,7 @@
 
 ## 简介
 
-**Taro** 是一套遵循 [React](https://reactjs.org/) 语法规范的 **多端开发** 解决方案。现如今市面上端的形态多种多样，Web、React-Native、微信小程序等各种端大行其道，当业务要求同时在不同的端都要求有所表现的时候，针对不同的端去编写多套代码的成本显然非常高，这时候只编写一套代码就能够适配到多端的能力就显得极为需要。
+**Taro** 是一套遵循 [React](https://reactjs.org/) 语法规范的 **多端开发** 解决方案。现如今市面上端的形态多种多样，Web、React-Native、微信小程序、支付宝小程序等各种端大行其道，当业务要求同时在不同的端都要求有所表现的时候，针对不同的端去编写多套代码的成本显然非常高，这时候只编写一套代码就能够适配到多端的能力就显得极为需要。
 
 使用 **Taro**，我们可以只书写一套代码，再通过 **Taro** 的编译工具，将源代码分别编译出可以在不同端（微信小程序、H5、React-Native 等）运行的代码。
 
@@ -28,6 +28,7 @@ Taro 已经投入到了生产环境使用，超过 3 万行代码的 TOPLIFE 小
 * Taro 实验性特性项目 [taro-todo](https://github.com/NervJS/taro-todo)
 * [仿知乎小程序](https://github.com/NervJS/taro-zhihu-sample)
 * [V2ex小程序（TypeScript）](https://github.com/NervJS/taro-v2ex)
+* [支付宝小程序支持 demo](https://github.com/shpeng/taroDemo)
 
 ## Taro 特性
 
