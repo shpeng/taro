@@ -49,7 +49,7 @@ export function newJSXIfAttr (
   jsx: t.JSXElement,
   value: t.Identifier | t.Expression
 ) {
-  jsx.openingElement.attributes.push(buildJSXAttr('wx:if', value))
+  jsx.openingElement.attributes.push(buildJSXAttr('a:if', value))
 }
 
 export function setJSXAttr (
@@ -139,7 +139,7 @@ export function parseJSXElement (element: t.JSXElement): string {
           value = attrValue.value
         } else if (t.isJSXExpressionContainer(attrValue)) {
           const isBindEvent =
-            name.startsWith('bind') || name.startsWith('catch')
+            name.startsWith('on') || name.startsWith('catch')
           let { code } = generate(attrValue.expression)
           code = code
             .replace(/(this\.props\.)|(this\.state\.)/g, '')
@@ -148,7 +148,7 @@ export function parseJSXElement (element: t.JSXElement): string {
           if (t.isStringLiteral(attrValue.expression)) {
             value = attrValue.expression.value
           }
-        } else if (attrValue === null && name !== 'wx:else') {
+        } else if (attrValue === null && name !== 'a:else') {
           value = `{{true}}`
         }
         if (
@@ -158,7 +158,8 @@ export function parseJSXElement (element: t.JSXElement): string {
         ) {
           obj[name] = value
         } else {
-          obj[isDefaultComponent && !name.includes('-') && !name.includes(':') ? kebabCase(name) : name] = value
+          //obj[isDefaultComponent && !name.includes('-') && !name.includes(':') ? kebabCase(name) : name] = value
+          obj[isDefaultComponent && !name.includes('-') && !name.includes(':') ? name : name] = value
         }
       }
       if (!isDefaultComponent && !specialComponentName.includes(componentName)) {

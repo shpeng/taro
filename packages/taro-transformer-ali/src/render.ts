@@ -197,7 +197,7 @@ export class RenderParser {
         const block2 = buildBlockElement()
         block.children = [consequent]
         newJSXIfAttr(block, test)
-        setJSXAttr(block2, 'wx:else')
+        setJSXAttr(block2, 'a:else')
         block2.children = [alternate]
         const parentBlock = buildBlockElement()
         parentBlock.children = [block, block2]
@@ -212,7 +212,7 @@ export class RenderParser {
         block.children = [t.jSXExpressionContainer(consequent)]
         newJSXIfAttr(block, test)
         const block2 = buildBlockElement()
-        setJSXAttr(block2, 'wx:else')
+        setJSXAttr(block2, 'a:else')
         block2.children = [t.jSXExpressionContainer(alternate)]
         const parentBlock = buildBlockElement()
         parentBlock.children = [block, block2]
@@ -308,7 +308,7 @@ export class RenderParser {
                       this.referencedIdentifiers.add(ary)
                     }
                   }
-                  setJSXAttr(jsxElementPath.node, 'wx:for', t.jSXExpressionContainer(ary))
+                  setJSXAttr(jsxElementPath.node, 'a:for', t.jSXExpressionContainer(ary))
                   const [func] = callExpr.node.arguments
                   if (
                     t.isFunctionExpression(func) ||
@@ -318,7 +318,7 @@ export class RenderParser {
                     if (t.isIdentifier(item)) {
                       setJSXAttr(
                         jsxElementPath.node,
-                        'wx:for-item',
+                        'a:for-item',
                         t.stringLiteral(item.name)
                       )
                       this.loopScopes.add(item.name)
@@ -327,14 +327,14 @@ export class RenderParser {
                     } else {
                       setJSXAttr(
                         jsxElementPath.node,
-                        'wx:for-item',
+                        'a:for-item',
                         t.stringLiteral('__item')
                       )
                     }
                     if (t.isIdentifier(index)) {
                       setJSXAttr(
                         jsxElementPath.node,
-                        'wx:for-index',
+                        'a:for-index',
                         t.stringLiteral(index.name)
                       )
                       this.loopScopes.add(index.name)
@@ -411,7 +411,7 @@ export class RenderParser {
                 if (parentIfStatement) {
                   setJSXAttr(
                     jsxElementPath.node,
-                    'wx:elif',
+                    'a:elif',
                     t.jSXExpressionContainer(test),
                     jsxElementPath
                   )
@@ -419,7 +419,7 @@ export class RenderParser {
                   if (this.topLevelIfStatement.size > 0) {
                     setJSXAttr(
                       jsxElementPath.node,
-                      'wx:elif',
+                      'a:elif',
                       t.jSXExpressionContainer(test),
                       jsxElementPath
                     )
@@ -430,7 +430,7 @@ export class RenderParser {
                 }
               }
             } else if (block.children.length !== 0) {
-              setJSXAttr(jsxElementPath.node, 'wx:else')
+              setJSXAttr(jsxElementPath.node, 'a:else')
             }
             block.children.push(jsxElementPath.node)
             this.finalReturnElement = block
@@ -451,7 +451,7 @@ export class RenderParser {
               if (isBlockIfStatement(ifStatement, blockStatement)) {
                 const { test, alternate, consequent } = ifStatement.node
                 if (alternate === blockStatement.node) {
-                  setJSXAttr(jsxElementPath.node, 'wx:else')
+                  setJSXAttr(jsxElementPath.node, 'a:else')
                 } else if (consequent === blockStatement.node) {
                   const parentIfStatement = ifStatement.findParent(p =>
                     p.isIfStatement()
@@ -459,7 +459,7 @@ export class RenderParser {
                   if (parentIfStatement && parentIfStatement.get('alternate') === ifStatement) {
                     setJSXAttr(
                       jsxElementPath.node,
-                      'wx:elif',
+                      'a:elif',
                       t.jSXExpressionContainer(test),
                       jsxElementPath
                     )
@@ -565,18 +565,18 @@ export class RenderParser {
               const element = p.get('openingElement') as NodePath<t.JSXOpeningElement>
               if (element.get('name').isJSXIdentifier({ name: 'block' })) {
                 const attrs = element.node.attributes
-                const hasWXForLoop = attrs.some(attr => t.isJSXIdentifier(attr.name, { name: 'wx:for' }))
-                const hasWXKey = attrs.some(attr => t.isJSXIdentifier(attr.name, { name: 'wx:key' }))
+                const hasWXForLoop = attrs.some(attr => t.isJSXIdentifier(attr.name, { name: 'a:for' }))
+                const hasWXKey = attrs.some(attr => t.isJSXIdentifier(attr.name, { name: 'a:key' }))
                 return hasWXForLoop && !hasWXKey
               }
             }
             return false
           }) as NodePath<t.JSXElement>
           if (loopBlock) {
-            setJSXAttr(loopBlock.node, 'wx:key', value)
+            setJSXAttr(loopBlock.node, 'a:key', value)
             path.remove()
           } else {
-            path.get('name').replaceWith(t.jSXIdentifier('wx:key'))
+            path.get('name').replaceWith(t.jSXIdentifier('a:key'))
           }
         } else if (
           name.name.startsWith('on')
@@ -609,10 +609,10 @@ export class RenderParser {
           ) {
             const componentName = jsxElementPath.node.openingElement.name.name
             if (DEFAULT_Component_SET.has(componentName)) {
-              let transformName = `${eventShouldBeCatched ? 'catch' : 'bind'}`
+              let transformName = `${eventShouldBeCatched ? 'catch' : 'on'}`
                 + name.name.slice(2, name.name.length).toLowerCase()
               if (name.name === 'onClick') {
-                transformName = eventShouldBeCatched ? 'catchtap' : 'bindtap'
+                transformName = eventShouldBeCatched ? 'catchTap' : 'onTap'
               }
               path.node.name = t.jSXIdentifier(transformName)
             } else if (THIRD_PARTY_COMPONENTS.has(componentName)) {
@@ -933,10 +933,10 @@ export class RenderParser {
                 }
               }
             })
-            // setJSXAttr(returned, 'wx:for', t.identifier(stateName))
+            // setJSXAttr(returned, 'a:for', t.identifier(stateName))
             this.addRefIdentifier(callee, t.identifier(stateName))
             // this.referencedIdentifiers.add(t.identifier(stateName))
-            setJSXAttr(component.node, 'wx:for', t.jSXExpressionContainer(t.identifier(stateName)))
+            setJSXAttr(component.node, 'a:for', t.jSXExpressionContainer(t.identifier(stateName)))
             this.renderPath.node.body.body.push(
               buildConstVariableDeclaration(stateName, callee.node)
             )
