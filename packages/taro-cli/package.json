@@ -1,6 +1,6 @@
 {
   "name": "tarojs-cli-s4s",
-  "version": "1.0.0-beta.17",
+  "version": "1.0.0-beta.18",
   "private": false,
   "description": "cli tool for taro",
   "main": "index.js",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@tarojs/transformer-wx": "1.0.0-beta.10",
-    "tarojs-transformer-ali-s4s": "1.0.0-beta.11",
+    "tarojs-transformer-ali-s4s": "1.0.0-beta.13",
     "autoprefixer": "^8.4.1",
     "babel-core": "^6.26.3",
     "babel-generator": "^6.26.1",

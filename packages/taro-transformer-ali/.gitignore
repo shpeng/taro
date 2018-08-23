@@ -4,6 +4,7 @@ node_modules
 .DS_Store
 lerna-debug.log
 yarn-error.log
+npm-debug.log
 _book
 .idea
 lib
