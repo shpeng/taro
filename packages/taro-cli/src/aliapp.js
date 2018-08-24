@@ -938,8 +938,8 @@ async function buildEntry () {
     }
     // 编译样式文件
     if (Util.isDifferentArray(fileDep['style'], res.styleFiles) && appOutput) {
-      await compileDepStyles(path.join(outputDir, 'app.wxss'), res.styleFiles, [])
-      Util.printLog(Util.pocessTypeEnum.GENERATE, '入口样式', `${outputDirName}/app.wxss`)
+      await compileDepStyles(path.join(outputDir, 'app.acss'), res.styleFiles, [])
+      Util.printLog(Util.pocessTypeEnum.GENERATE, '入口样式', `${outputDirName}/app.acss`)
     }
     // 拷贝依赖文件
     if (Util.isDifferentArray(fileDep['json'], res.jsonFiles)) {
@@ -1278,7 +1278,7 @@ function getDepStyleList (outputFilePath, buildDepComponentsResult) {
   let depWXSSList = []
   if (buildDepComponentsResult.length) {
     depWXSSList = buildDepComponentsResult.map(item => {
-      let wxss = item.wxss
+      let wxss = item.acss
       wxss = wxss.replace(sourceDir, outputDir)
       wxss = Util.promoteRelativePath(path.relative(outputFilePath, wxss))
       return wxss
@@ -1322,8 +1322,8 @@ async function buildSingleComponent (componentObj, buildConfig = {}) {
   Util.printLog(Util.pocessTypeEnum.COMPILE, '组件文件', componentShowPath)
   const componentContent = fs.readFileSync(component).toString()
   const outputComponentJSPath = component.replace(sourceDirPath, buildConfig.outputDir || buildOutputDir).replace(path.extname(component), '.js')
-  const outputComponentWXMLPath = outputComponentJSPath.replace(path.extname(outputComponentJSPath), '.wxml')
-  const outputComponentWXSSPath = outputComponentJSPath.replace(path.extname(outputComponentJSPath), '.wxss')
+  const outputComponentWXMLPath = outputComponentJSPath.replace(path.extname(outputComponentJSPath), '.axml')
+  const outputComponentWXSSPath = outputComponentJSPath.replace(path.extname(outputComponentJSPath), '.acss')
   const outputComponentJSONPath = outputComponentJSPath.replace(path.extname(outputComponentJSPath), '.json')
   if (hasBeenBuiltComponents.indexOf(component) < 0) {
     hasBeenBuiltComponents.push(component)
@@ -1437,14 +1437,14 @@ async function buildSingleComponent (componentObj, buildConfig = {}) {
     fs.writeFileSync(outputComponentJSPath, resCode)
     Util.printLog(Util.pocessTypeEnum.GENERATE, '组件JS', `${outputDirName}/${outputComponentShowPath}.js`)
     fs.writeFileSync(outputComponentWXMLPath, transformResult.template)
-    Util.printLog(Util.pocessTypeEnum.GENERATE, '组件WXML', `${outputDirName}/${outputComponentShowPath}.wxml`)
+    Util.printLog(Util.pocessTypeEnum.GENERATE, '组件WXML', `${outputDirName}/${outputComponentShowPath}.axml`)
     // 编译依赖的脚本文件
     if (Util.isDifferentArray(fileDep['script'], res.scriptFiles)) {
       compileDepScripts(res.scriptFiles)
     }
     // 编译样式文件
     if (Util.isDifferentArray(fileDep['style'], res.styleFiles) || Util.isDifferentArray(depComponents[component], componentDepComponents)) {
-      Util.printLog(Util.pocessTypeEnum.GENERATE, '组件WXSS', `${outputDirName}/${outputComponentShowPath}.wxss`)
+      Util.printLog(Util.pocessTypeEnum.GENERATE, '组件WXSS', `${outputDirName}/${outputComponentShowPath}.acss`)
       const depStyleList = getDepStyleList(outputComponentWXSSPath, buildDepComponentsResult)
       wxssDepTree[outputComponentWXSSPath] = depStyleList
       await compileDepStyles(outputComponentWXSSPath, res.styleFiles, depStyleList)
@@ -1464,8 +1464,8 @@ async function buildSingleComponent (componentObj, buildConfig = {}) {
     depComponents[component] = componentDepComponents
     componentsBuildResult[component] = {
       js: outputComponentJSPath,
-      wxss: outputComponentWXSSPath,
-      wxml: outputComponentWXMLPath
+      acss: outputComponentWXSSPath,
+      axml: outputComponentWXMLPath
     }
     return componentsBuildResult[component]
   } catch (err) {
@@ -1699,7 +1699,7 @@ function watchFiles () {
         if (includeStyleJSPath.length) {
           includeStyleJSPath.forEach(async item => {
             let outputWXSSPath = null
-            outputWXSSPath = item.filePath.replace(path.extname(item.filePath), '.wxss')
+            outputWXSSPath = item.filePath.replace(path.extname(item.filePath), '.acss')
             let modifySource = outputWXSSPath.replace(appPath + path.sep, '')
             modifySource = modifySource.split(path.sep).join('/')
             Util.printLog(Util.pocessTypeEnum.MODIFY, '样式文件', modifySource)
@@ -1720,7 +1720,7 @@ function watchFiles () {
             Util.printLog(Util.pocessTypeEnum.GENERATE, '样式文件', modifyOutput)
           })
         } else {
-          let outputWXSSPath = filePath.replace(path.extname(filePath), '.wxss')
+          let outputWXSSPath = filePath.replace(path.extname(filePath), '.acss')
           let modifySource = outputWXSSPath.replace(appPath + path.sep, '')
           modifySource = modifySource.split(path.sep).join('/')
           Util.printLog(Util.pocessTypeEnum.MODIFY, '样式文件', modifySource)
